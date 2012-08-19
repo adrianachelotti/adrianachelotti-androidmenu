@@ -1,0 +1,31 @@
+{
+  "name" : "Choose one of the elements",
+  "description" : "Choose element",
+  "type" : "LIST",
+  "items" : [
+     {
+        "name" : "List: 5",
+        "transaction" : "tel:*1455145*1#"
+     },
+     {
+        "name" : "List: 10",
+        "transaction" : "tel:*1455145*2#"
+     },
+     {
+        "name" : "List: 15",
+        "transaction" : "tel:*1455145*3#"
+     },
+     {
+        "name" : "List: 20",
+        "transaction" : "tel:*1455145*4#"
+     },
+     {
+        "name" : "List: 25",
+        "transaction" : "tel:*1455145*5#"
+     },
+     {
+        "name" : "List: 30",
+        "transaction" : "tel:*1455145*6#"
+     }
+  ]
+}
