@@ -18,12 +18,12 @@ import android.widget.ImageView;
  * Activity displaying splash screen.
  */
 public class SplashScreenActivity extends Activity {
-    private class InternalMenuRetrieverAsyncTask extends AsyncTask<Void, Void, Void> {
+    public class InternalMenuRetrieverAsyncTask extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(final Void... params) {
             Log.d(TAG, "Copying the embedded menu.");
             try {
-                application.getFirstTimeMenuRetriever().copyMenu();
+                application.getFirstTimeMenuRetriever().copyMenu(this);
                 final SharedPreferences sp = getSharedPreferences("myPrefs", 0);
                 final Editor a = sp.edit();
                 try {
@@ -41,11 +41,31 @@ public class SplashScreenActivity extends Activity {
             return null;
         }
 
+        public void publicPublishProgress(final Integer... values) {
+            publishProgress(values);
+        }
+
         @Override
         protected void onPostExecute(final Void result) {
             readMenu();
         }
 
+        @Override
+        protected void onProgressUpdate(final Integer... values) {
+            super.onProgressUpdate(values);
+            // final Integer integer = Integer.parseInt(((String[]) values)[0]);
+            SplashScreenActivity.this.onProgressUpdate(values[0]);
+        }
+    }
+
+    private int progressStatus = 0;
+
+    protected void onProgressUpdate(final int value) {
+        progressStatus += value;
+    }
+
+    protected int getProgressStatus() {
+        return progressStatus;
     }
 
     private static final String TAG = SplashScreenActivity.class.getSimpleName();
@@ -71,7 +91,7 @@ public class SplashScreenActivity extends Activity {
         if (savedInstanceState == null) {
             getSplashScreen();
             if (checkFirstTimeMenuRetrievalNeeded()) {
-                final AsyncTask<Void, Void, Void> embeddedMenuRetrieveTask = new InternalMenuRetrieverAsyncTask();
+                final AsyncTask<Void, Integer, Void> embeddedMenuRetrieveTask = new InternalMenuRetrieverAsyncTask();
                 embeddedMenuRetrieveTask.execute((Void[]) null);
                 // note- reading menu will be fired automaticallly when internal
                 // menu refreshed

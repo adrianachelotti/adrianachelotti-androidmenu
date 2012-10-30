@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import pl.polidea.navigator.SplashScreenActivity.InternalMenuRetrieverAsyncTask;
 import android.content.Context;
 import android.util.Log;
 
@@ -32,7 +33,7 @@ public abstract class AbstractMenuRetrieverBase implements MenuRetrieverInterfac
         this.ctx = ctx;
     }
 
-    protected abstract void copyMenuInternally() throws IOException;
+    protected abstract void copyMenuInternally(final InternalMenuRetrieverAsyncTask asyncTask) throws IOException;
 
     protected String getOldSignature() throws IOException {
         Log.d(TAG, "Retrieving signature from: " + internalDirectory);
@@ -136,8 +137,14 @@ public abstract class AbstractMenuRetrieverBase implements MenuRetrieverInterfac
 
     @Override
     public boolean copyMenu() throws IOException {
+        return copyMenu(null);
+    }
+
+    @Override
+    public boolean copyMenu(final InternalMenuRetrieverAsyncTask asyncTask) throws IOException {
         final String oldSignature = getOldSignature();
         final String newSignature = getMenuSignature();
+        asyncTask.publicPublishProgress(Integer.valueOf(1));
         Log.d(TAG, "Comparing " + oldSignature + " with " + newSignature);
         if (newSignature == null) {
             Log.d(TAG, "Cannot retrieve new signature. Probably error retrieving it. Skipping.");
@@ -149,12 +156,14 @@ public abstract class AbstractMenuRetrieverBase implements MenuRetrieverInterfac
         }
         Log.d(TAG, "Cleaning up " + internalTmpDirectory);
         cleanUpDirectory(internalTmpDirectory);
+        asyncTask.publicPublishProgress(Integer.valueOf(1));
         if (!internalTmpDirectory.mkdirs()) {
             Log.w(TAG, "Could not create temporary directory: " + internalTmpDirectory);
         }
         Log.d(TAG, "Cleaned up " + internalTmpDirectory);
         saveSignatureToFile(newSignature);
-        copyMenuInternally();
+        asyncTask.publicPublishProgress(Integer.valueOf(1));
+        copyMenuInternally(asyncTask);
         Log.d(TAG, "Renaming " + internalDirectory + " to " + internalOldDirectory);
         if (!internalDirectory.renameTo(internalOldDirectory)) {
             Log.w(TAG, "Could not rename " + internalDirectory + " to " + internalOldDirectory);

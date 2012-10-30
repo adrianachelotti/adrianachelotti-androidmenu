@@ -3,6 +3,8 @@ package pl.polidea.navigator.retrievers;
 import java.io.File;
 import java.io.IOException;
 
+import pl.polidea.navigator.SplashScreenActivity.InternalMenuRetrieverAsyncTask;
+
 /**
  * Interface implemented by a mechanism retrieving menu from a source
  * (assets/zip file etc.).
@@ -18,6 +20,16 @@ public interface MenuRetrieverInterface {
      * @throws IOException
      */
     boolean copyMenu() throws IOException;
+
+    /**
+     * Copy menu from source to destination and tick progress. This is expensive
+     * (in terms of performance).
+     * 
+     * @return true if copy occured, false if cached version was used actually
+     * 
+     * @throws IOException
+     */
+    boolean copyMenu(InternalMenuRetrieverAsyncTask asyncTask) throws IOException;
 
     /**
      * Retrieves signature of the menu without actual menu retrieval (this is

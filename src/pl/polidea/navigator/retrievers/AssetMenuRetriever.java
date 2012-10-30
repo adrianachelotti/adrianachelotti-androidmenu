@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import pl.polidea.navigator.SplashScreenActivity.InternalMenuRetrieverAsyncTask;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -25,15 +26,17 @@ public class AssetMenuRetriever extends AbstractMenuRetrieverBase implements Men
     }
 
     @Override
-    protected void copyMenuInternally() throws IOException {
-        copyRecursivelyFromAsset(null, null);
+    protected void copyMenuInternally(final InternalMenuRetrieverAsyncTask asyncTask) throws IOException {
+        copyRecursivelyFromAsset(null, null, asyncTask);
     }
 
-    private void copyRecursivelyFromAsset(final String path, String[] elements) throws IOException {
+    private void copyRecursivelyFromAsset(final String path, String[] elements,
+            final InternalMenuRetrieverAsyncTask asyncTask) throws IOException {
         if (elements == null) {
             elements = assetManager.list(fromAssetLocation + (path == null ? "" : "/" + path));
         }
         for (final String element : elements) {
+            asyncTask.publicPublishProgress(Integer.valueOf(1));
             final String newPath = (path == null ? "" : path + "/") + element;
             final String newPathIncludingAsset = fromAssetLocation + "/" + newPath;
             final String[] subdirs = assetManager.list(newPathIncludingAsset);
@@ -46,7 +49,7 @@ public class AssetMenuRetriever extends AbstractMenuRetrieverBase implements Men
                     Log.w(TAG, "Could not create the " + destFile + " directory.");
                 }
                 Log.d(TAG, "Creating dir " + destFile);
-                copyRecursivelyFromAsset(newPath, subdirs);
+                copyRecursivelyFromAsset(newPath, subdirs, asyncTask);
             }
         }
     }
