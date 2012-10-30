@@ -12,8 +12,16 @@ import android.content.Context;
 public class FloatNumberMenu extends AbstractDataEntryMenu {
 
     private static final long serialVersionUID = 1L;
-    public final Integer minVal;
-    public final Integer maxVal;
+    public Integer minVal;
+    public Integer maxVal;
+
+    public void setMinVal(final Integer minVal) {
+        this.minVal = minVal;
+    }
+
+    public void setMaxVal(final Integer maxVal) {
+        this.maxVal = maxVal;
+    }
 
     public FloatNumberMenu(final JsonMenuReader reader, final JSONObject jsonMenu, final AbstractNavigationMenu parent,
             final Context context) throws JSONException {
@@ -26,6 +34,18 @@ public class FloatNumberMenu extends AbstractDataEntryMenu {
     @Override
     public String toString() {
         return "FloatNumberMenu [" + super.toString() + "]";
+    }
+
+    /**
+     * @param reader
+     * @param jsonMenu
+     * @param parent
+     * @param context
+     * @throws JSONException
+     */
+    public void setOtherInformations(final JsonMenuReader reader, final JSONObject jsonMenu,
+            final AbstractNavigationMenu parent, final Context context) throws JSONException {
+        super.setOtherInformations(reader, jsonMenu, menuType, parent, context);
     }
 
 }

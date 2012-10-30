@@ -23,4 +23,17 @@ public class ListMenu extends AbstractBaseListMenu {
         return "ListMenu [" + super.toString() + "]";
     }
 
+    /**
+     * @param reader
+     * @param jsonMenu
+     * @param parent
+     * @param context
+     * @throws JSONException
+     */
+    public void setOtherInformations(final JsonMenuReader reader, final JSONObject jsonMenu,
+            final AbstractNavigationMenu parent, final Context context) throws JSONException {
+        super.setOtherInformations(reader, jsonMenu, BasicMenuTypes.LIST, parent, context);
+
+    }
+
 }

@@ -23,4 +23,16 @@ public class PhoneNumberMenu extends AbstractDataEntryMenu {
         return "PhoneNumberMenu [" + super.toString() + "]";
     }
 
+    /**
+     * @param reader
+     * @param jsonMenu
+     * @param parent
+     * @param context
+     * @throws JSONException
+     */
+    public void setOtherInformations(final JsonMenuReader reader, final JSONObject jsonMenu,
+            final AbstractNavigationMenu parent, final Context context) throws JSONException {
+        super.setOtherInformations(reader, jsonMenu, menuType, parent, context);
+    }
+
 }
