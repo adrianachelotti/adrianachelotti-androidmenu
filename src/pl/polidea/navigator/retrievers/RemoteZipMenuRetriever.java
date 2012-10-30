@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import pl.polidea.navigator.SplashScreenActivity.InternalMenuRetrieverAsyncTask;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -81,7 +82,7 @@ public class RemoteZipMenuRetriever extends AbstractMenuRetrieverBase implements
     }
 
     @Override
-    protected void copyMenuInternally() throws IOException {
+    protected void copyMenuInternally(final InternalMenuRetrieverAsyncTask asyncTask) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) whereToDownloadFrom.openConnection();
         conn.setConnectTimeout(5 * 1000);
         conn.connect();
