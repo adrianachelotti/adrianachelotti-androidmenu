@@ -39,4 +39,17 @@ public class MenuImport extends AbstractNavigationMenu {
         }
     }
 
+    /**
+     * @param reader
+     * @param jsonMenu
+     * @param parent
+     * @param context
+     * @throws JSONException
+     */
+    public void setOtherInformations(final JsonMenuReader reader, final JSONObject jsonMenu,
+            final AbstractNavigationMenu parent, final Context context) throws JSONException {
+        super.setOtherInformations(reader, jsonMenu, BasicMenuTypes.MENU_IMPORT, parent, context);
+        link = reader.readLink(jsonMenu, directory, parent);
+    }
+
 }

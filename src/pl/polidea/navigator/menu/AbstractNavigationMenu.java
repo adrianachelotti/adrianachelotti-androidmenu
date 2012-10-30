@@ -12,24 +12,56 @@ import pl.polidea.navigator.JsonMenuReader;
 import pl.polidea.navigator.Persistence;
 import android.content.Context;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Base class for all menu types.
  * 
  */
 public abstract class AbstractNavigationMenu implements Serializable {
     private static final long serialVersionUID = 1L;
-    public final String name;
+    public String name;
     public String description;
-    public final String help;
-    public final String iconFile;
-    public final String breadCrumbIconFile;
-    public final File directory;
-    public final String menuType;
-    public final Map<String, String> parameters;
+    public String help;
+    @JsonProperty("icon") public String iconFile;
+    @JsonProperty("breadcrumb_icon") public String breadCrumbIconFile;
+    public File directory;
+    public String menuType;
+    public Map<String, String> parameters;
     public transient MenuContext menuContext;
     public transient AbstractNavigationMenu parent;
 
     private transient Persistence persistence;
+
+    public AbstractNavigationMenu() {
+
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public void setHelp(final String help) {
+        this.help = help;
+    }
+
+    public void setIconFile(final String iconFile) {
+        this.iconFile = iconFile;
+    }
+
+    public void setBreadCrumbIconFile(final String breadCrumbIconFile) {
+        this.breadCrumbIconFile = breadCrumbIconFile;
+    }
+
+    public void setOtherInformations(final JsonMenuReader reader, final JSONObject jsonMenu, final String menuType,
+            final AbstractNavigationMenu parent, final Context context) throws JSONException {
+        this.directory = reader.directory;
+        this.menuType = menuType;
+        this.menuContext = reader.menuContext;
+        this.persistence = new Persistence(context);
+        this.parameters = new TreeMap<String, String>();
+        JsonMenuReader.readParameters(this.parameters, jsonMenu, "parameters");
+    }
 
     public AbstractNavigationMenu(final String name, final String menuType, final Context context) {
         this.directory = null;
