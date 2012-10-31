@@ -10,7 +10,7 @@ import android.content.Context;
  * Base class for all number menu types.
  * 
  */
-public abstract class AbstractDataEntryMenu extends AbstractNavigationMenu {
+public abstract class AbstractDataEntryMenu extends TransactionMenu {
 
     private static final long serialVersionUID = 1L;
     public final String variable;
