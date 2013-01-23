@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MenuNavigator</string>
+    <string name="default_icon_text">&lt;missing&gt;</string>
+    <string name="provide_number_button_text">Next</string>
+    <string name="provide_number_button_hint">Enter number</string>
+    <string name="provide_number_label">Provide number</string>
+    <string name="provide_phone_number_button_hint">Enter phone</string>
+    <string name="provide_phone_number_label">Enter phone number</string>
+    <string name="error_phone_number_not_valid">Your phone number is not valid!!!</string>
+    <string name="error_too_short">Too short (min. %1$d characters required)</string>
+    <string name="provide_string_button_text">Next</string>
+    <string name="provide_string_button_hint">Enter text</string>
+    <string name="provide_string_label">Provide text</string>
+    <string name="default_apphance_key">Some not valid apphance key should be replaced in the final application</string>
+    <string name="first_time_loading">Loading for the first time</string>
+    <string name="ostatnio_wybierane">Ostatnio wybierane</string>
+</resources>
